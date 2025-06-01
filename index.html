@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interaktiver Trainingsplan mit Gemini</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .tab.active { border-color: #0d9488; color: #0d9488; background-color: #f0fdfa; }
+        .accordion-content { overflow: hidden; transition: max-height 0.3s ease-in-out; }
+        .modal-content-display { white-space: pre-wrap; }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+
+    <div class="container mx-auto max-w-4xl p-4 sm:p-6 md:p-8">
+
+        <header class="text-center mb-8 md:mb-12">
+            <h1 class="text-3xl sm:text-4xl font-bold text-stone-900">Interaktiver Trainingsplan <span class="text-teal-600">✨</span></h1>
+            <p class="text-stone-600 mt-2">Dein digitaler Begleiter für schnellen Muskelaufbau – jetzt mit KI-Power!</p>
+        </header>
+
+        <main>
+            <section id="workout-selector" class="mb-8">
+                <h2 class="text-xl sm:text-2xl font-semibold text-center mb-4 text-stone-700">Wähle dein heutiges Training</h2>
+                <div class="flex justify-center border border-stone-200 rounded-lg p-1 bg-stone-100 max-w-sm mx-auto">
+                    <button id="tab-a" class="tab w-1/2 p-2 sm:p-3 text-sm sm:text-base font-semibold rounded-md border-2 border-transparent transition-colors duration-200">Workout A</button>
+                    <button id="tab-b" class="tab w-1/2 p-2 sm:p-3 text-sm sm:text-base font-semibold rounded-md border-2 border-transparent transition-colors duration-200">Workout B</button>
+                </div>
+            </section>
+
+            <section id="workout-details">
+                <div id="content-a">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                        <div class="bg-white p-5 rounded-xl border border-stone-200 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-lg text-stone-900">1. Kurzhantel Kniebeugen</h3>
+                                <p class="text-sm text-stone-500 mb-3">Beine, Rumpf</p>
+                                <p class="font-semibold text-stone-700">3-4 Sätze × 8-12 Wdh.</p>
+                                <p class="text-sm text-stone-600 mt-2">Eine Hantel senkrecht vor der Brust halten. Tief und kontrolliert absenken.</p>
+                            </div>
+                            <div class="mt-4">
+                                <a href="https://www.youtube.com/watch?v=fXgLOh35PkE" target="_blank" class="block text-center bg-teal-600 text-white font-semibold py-2 rounded-lg hover:bg-teal-700 transition-colors">Video ansehen ▸</a>
+                                <button class="geminiVariationBtn w-full text-sm text-teal-600 hover:text-teal-700 font-semibold py-2 mt-2 rounded-lg border border-teal-600 hover:bg-teal-50 transition-colors" data-exercise-name="Kurzhantel Kniebeugen (Goblet Squat)">✨ Variation vorschlagen</button>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-stone-200 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-lg text-stone-900">2. Floor Press</h3>
+                                <p class="text-sm text-teal-600 font-semibold mb-3">BRUST, Trizeps, Schulter</p>
+                                <p class="font-semibold text-stone-700">3-4 Sätze × 8-12 Wdh.</p>
+                                <p class="text-sm text-stone-600 mt-2">Auf dem Boden liegend, Oberarme berühren Boden leicht.</p>
+                            </div>
+                            <div class="mt-4">
+                                <a href="https://www.youtube.com/watch?v=p3jpYq9h0kM" target="_blank" class="block text-center bg-teal-600 text-white font-semibold py-2 rounded-lg hover:bg-teal-700 transition-colors">Video ansehen ▸</a>
+                                <button class="geminiVariationBtn w-full text-sm text-teal-600 hover:text-teal-700 font-semibold py-2 mt-2 rounded-lg border border-teal-600 hover:bg-teal-50 transition-colors" data-exercise-name="Kurzhantel Flachbankdrücken (Floor Press)">✨ Variation vorschlagen</button>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-stone-200 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-lg text-stone-900">3. Klimmzüge</h3>
+                                <p class="text-sm text-stone-500 mb-3">Rücken (Breite), Bizeps</p>
+                                <p class="font-semibold text-stone-700">3-4 Sätze × AMRAP</p>
+                                <p class="text-sm text-stone-600 mt-2">Wenn zu schwer: Negative Klimmzüge oder Stuhl-Unterstützung nutzen.</p>
+                            </div>
+                            <div class="mt-4">
+                                <a href="https://www.youtube.com/watch?v=E3gYp10nmmI" target="_blank" class="block text-center bg-teal-600 text-white font-semibold py-2 rounded-lg hover:bg-teal-700 transition-colors">Video ansehen ▸</a>
+                                <button class="geminiVariationBtn w-full text-sm text-teal-600 hover:text-teal-700 font-semibold py-2 mt-2 rounded-lg border border-teal-600 hover:bg-teal-50 transition-colors" data-exercise-name="Klimmzüge">✨ Variation vorschlagen</button>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-stone-200 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-lg text-stone-900">4. Schulterdrücken</h3>
+                                <p class="text-sm text-teal-600 font-semibold mb-3">SCHULTER (Breite), Trizeps</p>
+                                <p class="font-semibold text-stone-700">3-4 Sätze × 8-12 Wdh.</p>
+                                <p class="text-sm text-stone-600 mt-2">Stehend, Hanteln auf Schulterhöhe starten, kontrolliert nach oben drücken.</p>
+                            </div>
+                            <div class="mt-4">
+                                <a href="https://www.youtube.com/watch?v=acpGjW6gG3c" target="_blank" class="block text-center bg-teal-600 text-white font-semibold py-2 rounded-lg hover:bg-teal-700 transition-colors">Video ansehen ▸</a>
+                                <button class="geminiVariationBtn w-full text-sm text-teal-600 hover:text-teal-700 font-semibold py-2 mt-2 rounded-lg border border-teal-600 hover:bg-teal-50 transition-colors" data-exercise-name="Kurzhantel Schulterdrücken (stehend)">✨ Variation vorschlagen</button>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-stone-200 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-lg text-stone-900">5. Bizeps Curls</h3>
+                                <p class="text-sm text-stone-500 mb-3">Bizeps</p>
+                                <p class="font-semibold text-stone-700">3 Sätze × 10-15 Wdh.</p>
+                                <p class="text-sm text-stone-600 mt-2">Ellenbogen bleiben am Körper.</p>
+                            </div>
+                            <div class="mt-4">
+                                <a href="https://www.youtube.com/watch?v=jLAGYdYvW0M" target="_blank" class="block text-center bg-teal-600 text-white font-semibold py-2 rounded-lg hover:bg-teal-700 transition-colors">Video ansehen ▸</a>
+                                <button class="geminiVariationBtn w-full text-sm text-teal-600 hover:text-teal-700 font-semibold py-2 mt-2 rounded-lg border border-teal-600 hover:bg-teal-50 transition-colors" data-exercise-name="Kurzhantel Bizeps Curls">✨ Variation vorschlagen</button>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-stone-200 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-lg text-stone-900">6. Plank</h3>
+                                <p class="text-sm text-teal-600 font-semibold mb-3">BAUCH (Core)</p>
+                                <p class="font-semibold text-stone-700">3 Sätze × 30-60s Halten</p>
+                                <p class="text-sm text-stone-600 mt-2">Körper bildet eine gerade Linie, Bauch fest anspannen.</p>
+                            </div>
+                            <div class="mt-4">
+                                <a href="https://www.youtube.com/watch?v=sjD6L2jVp4Q" target="_blank" class="block text-center bg-teal-600 text-white font-semibold py-2 rounded-lg hover:bg-teal-700 transition-colors">Video ansehen ▸</a>
+                                <button class="geminiVariationBtn w-full text-sm text-teal-600 hover:text-teal-700 font-semibold py-2 mt-2 rounded-lg border border-teal-600 hover:bg-teal-50 transition-colors" data-exercise-name="Plank (Unterarmstütz)">✨ Variation vorschlagen</button>
+                            </div>
+                        </div>
+                         <div class="bg-white p-5 rounded-xl border border-stone-200 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-lg text-stone-900">7. Crunches</h3>
+                                <p class="text-sm text-teal-600 font-semibold mb-3">BAUCH</p>
+                                <p class="font-semibold text-stone-700">3 Sätze × 15-20 Wdh.</p>
+                                <p class="text-sm text-stone-600 mt-2">Langsam und kontrolliert, Fokus auf Bauchmuskelspannung.</p>
+                            </div>
+                            <div class="mt-4">
+                                <a href="https://www.youtube.com/watch?v=Ne39kFk8yT4" target="_blank" class="block text-center bg-teal-600 text-white font-semibold py-2 rounded-lg hover:bg-teal-700 transition-colors">Video ansehen ▸</a>
+                                <button class="geminiVariationBtn w-full text-sm text-teal-600 hover:text-teal-700 font-semibold py-2 mt-2 rounded-lg border border-teal-600 hover:bg-teal-50 transition-colors" data-exercise-name="Crunches">✨ Variation vorschlagen</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="content-b" class="hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                         <div class="bg-white p-5 rounded-xl border border-stone-200 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-lg text-stone-900">1. Rumänisches Kreuzheben</h3>
+                                <p class="text-sm text-stone-500 mb-3">Beinrückseite, Gesäß</p>
+                                <p class="font-semibold text-stone-700">3-4 Sätze × 10-15 Wdh.</p>
+                                <p class="text-sm text-stone-600 mt-2">Leichte Beugung in den Knien, gerader Rücken, Hanteln eng am Körper führen.</p>
+                            </div>
+                            <div class="mt-4">
+                                <a href="https://www.youtube.com/watch?v=K0t7QY0N0Yk" target="_blank" class="block text-center bg-teal-600 text-white font-semibold py-2 rounded-lg hover:bg-teal-700 transition-colors">Video ansehen ▸</a>
+                                <button class="geminiVariationBtn w-full text-sm text-teal-600 hover:text-teal-700 font-semibold py-2 mt-2 rounded-lg border border-teal-600 hover:bg-teal-50 transition-colors" data-exercise-name="Kurzhantel Rumänisches Kreuzheben (RDL)">✨ Variation vorschlagen</button>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-stone-200 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-lg text-stone-900">2. Liegestütze</h3>
+                                <p class="text-sm text-teal-600 font-semibold mb-3">BRUST, Schulter, Trizeps</p>
+                                <p class="font-semibold text-stone-700">3-4 Sätze × AMRAP</p>
+                                <p class="text-sm text-stone-600 mt-2">Variationen nutzen (Knie, erhöht), um im Zielbereich 8-20 Wdh. zu landen.</p>
+                            </div>
+                            <div class="mt-4">
+                                <a href="https://www.youtube.com/watch?v=V0_S2d41J3A" target="_blank" class="block text-center bg-teal-600 text-white font-semibold py-2 rounded-lg hover:bg-teal-700 transition-colors">Video ansehen ▸</a>
+                                <button class="geminiVariationBtn w-full text-sm text-teal-600 hover:text-teal-700 font-semibold py-2 mt-2 rounded-lg border border-teal-600 hover:bg-teal-50 transition-colors" data-exercise-name="Liegestütze">✨ Variation vorschlagen</button>
+                            </div>
+                        </div>
+                         <div class="bg-white p-5 rounded-xl border border-stone-200 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-lg text-stone-900">3. Einarmiges Rudern</h3>
+                                <p class="text-sm text-stone-500 mb-3">Rücken (Tiefe & Breite)</p>
+                                <p class="font-semibold text-stone-700">3-4 Sätze × 8-12 Wdh. / Seite</p>
+                                <p class="text-sm text-stone-600 mt-2">Auf einer Erhöhung abstützen, Hantel eng am Körper hochziehen.</p>
+                            </div>
+                            <div class="mt-4">
+                                <a href="https://www.youtube.com/watch?v=zihTa3uY1YE" target="_blank" class="block text-center bg-teal-600 text-white font-semibold py-2 rounded-lg hover:bg-teal-700 transition-colors">Video ansehen ▸</a>
+                                <button class="geminiVariationBtn w-full text-sm text-teal-600 hover:text-teal-700 font-semibold py-2 mt-2 rounded-lg border border-teal-600 hover:bg-teal-50 transition-colors" data-exercise-name="Einarmiges Kurzhantel Rudern">✨ Variation vorschlagen</button>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-stone-200 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-lg text-stone-900">4. Seitheben</h3>
+                                <p class="text-sm text-teal-600 font-semibold mb-3">SCHULTER (Breite)</p>
+                                <p class="font-semibold text-stone-700">3-4 Sätze × 12-20 Wdh.</p>
+                                <p class="text-sm text-stone-600 mt-2">Arme leicht gebeugt, kontrollierte Bewegung bis auf Schulterhöhe.</p>
+                            </div>
+                            <div class="mt-4">
+                                <a href="https://www.youtube.com/watch?v=uog2aBEsR_E" target="_blank" class="block text-center bg-teal-600 text-white font-semibold py-2 rounded-lg hover:bg-teal-700 transition-colors">Video ansehen ▸</a>
+                                <button class="geminiVariationBtn w-full text-sm text-teal-600 hover:text-teal-700 font-semibold py-2 mt-2 rounded-lg border border-teal-600 hover:bg-teal-50 transition-colors" data-exercise-name="Kurzhantel Seitheben">✨ Variation vorschlagen</button>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-stone-200 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-lg text-stone-900">5. Überkopf-Trizepsdrücken</h3>
+                                <p class="text-sm text-stone-500 mb-3">Trizeps</p>
+                                <p class="font-semibold text-stone-700">3 Sätze × 10-15 Wdh.</p>
+                                <p class="text-sm text-stone-600 mt-2">Eine Hantel mit beiden Händen hinter dem Kopf halten und nach oben strecken.</p>
+                            </div>
+                            <div class="mt-4">
+                                <a href="https://www.youtube.com/watch?v=J0oe9oDxa3M" target="_blank" class="block text-center bg-teal-600 text-white font-semibold py-2 rounded-lg hover:bg-teal-700 transition-colors">Video ansehen ▸</a>
+                                <button class="geminiVariationBtn w-full text-sm text-teal-600 hover:text-teal-700 font-semibold py-2 mt-2 rounded-lg border border-teal-600 hover:bg-teal-50 transition-colors" data-exercise-name="Kurzhantel Überkopf-Trizepsdrücken">✨ Variation vorschlagen</button>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-stone-200 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-lg text-stone-900">6. Beinheben</h3>
+                                <p class="text-sm text-teal-600 font-semibold mb-3">BAUCH (unterer Teil)</p>
+                                <p class="font-semibold text-stone-700">3 Sätze × 10-15 Wdh.</p>
+                                <p class="text-sm text-stone-600 mt-2">Hängend an der Klimmzugstange oder auf dem Boden liegend.</p>
+                            </div>
+                            <div class="mt-4">
+                                <a href="https://www.youtube.com/watch?v=NfsEHAc0g1M" target="_blank" class="block text-center bg-teal-600 text-white font-semibold py-2 rounded-lg hover:bg-teal-700 transition-colors">Video ansehen ▸</a>
+                                <button class="geminiVariationBtn w-full text-sm text-teal-600 hover:text-teal-700 font-semibold py-2 mt-2 rounded-lg border border-teal-600 hover:bg-teal-50 transition-colors" data-exercise-name="Beinheben (hängend oder liegend)">✨ Variation vorschlagen</button>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-stone-200 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-bold text-lg text-stone-900">7. Russian Twists</h3>
+                                <p class="text-sm text-teal-600 font-semibold mb-3">BAUCH (seitlich)</p>
+                                <p class="font-semibold text-stone-700">3 Sätze × 15-20 Wdh. / Seite</p>
+                                <p class="text-sm text-stone-600 mt-2">Oberkörper zurückgelehnt, Füße vom Boden, Hantel von Seite zu Seite führen.</p>
+                            </div>
+                            <div class="mt-4">
+                                <a href="https://www.youtube.com/watch?v=3CacksvQI0g" target="_blank" class="block text-center bg-teal-600 text-white font-semibold py-2 rounded-lg hover:bg-teal-700 transition-colors">Video ansehen ▸</a>
+                                <button class="geminiVariationBtn w-full text-sm text-teal-600 hover:text-teal-700 font-semibold py-2 mt-2 rounded-lg border border-teal-600 hover:bg-teal-50 transition-colors" data-exercise-name="Russian Twists (mit Kurzhantel)">✨ Variation vorschlagen</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="basics" class="mt-12 md:mt-16 border-t border-stone-200 pt-8">
+                 <h2 class="text-xl sm:text-2xl font-semibold text-center mb-6 text-stone-700">Wichtige Grundlagen & KI-Helfer</h2>
+                 <div class="space-y-4 max-w-2xl mx-auto">
+                    <div class="bg-white p-4 rounded-lg border border-stone-200 shadow-sm text-center">
+                        <button id="geminiNutritionTipBtn" class="w-full sm:w-auto bg-teal-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-700 transition-colors flex items-center justify-center mx-auto">
+                            <span class="text-xl mr-2">✨</span> Ernährungstipp des Tages holen
+                        </button>
+                    </div>
+
+                    <div class="accordion-item bg-white border border-stone-200 rounded-lg">
+                        <button class="accordion-header w-full flex justify-between items-center p-4 text-left font-semibold text-stone-800">
+                            <span>Aufwärmen & Abkühlen</span>
+                            <span class="accordion-icon transition-transform">▼</span>
+                        </button>
+                        <div class="accordion-content max-h-0">
+                            <div class="p-4 pt-0 text-stone-600">
+                                <p class="font-semibold">Aufwärmen (5-10 Min):</p>
+                                <ul class="list-disc list-inside mt-1 space-y-1">
+                                    <li>2-3 Min leichtes Cardio (Hampelmänner, Rudern).</li>
+                                    <li>Dynamische Dehnübungen: Armkreisen, Schulterrollen, Beinschwingen.</li>
+                                </ul>
+                                <p class="font-semibold mt-4">Abkühlen (5-10 Min):</p>
+                                <ul class="list-disc list-inside mt-1 space-y-1">
+                                    <li>Statische Dehnungen für Brust, Schultern, Rücken und Beine.</li>
+                                    <li>Jede Dehnung 20-30 Sekunden halten.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="accordion-item bg-white border border-stone-200 rounded-lg">
+                        <button class="accordion-header w-full flex justify-between items-center p-4 text-left font-semibold text-stone-800">
+                            <span>Cardio mit dem Waterrower</span>
+                             <span class="accordion-icon transition-transform">▼</span>
+                        </button>
+                        <div class="accordion-content max-h-0">
+                            <div class="p-4 pt-0 text-stone-600 space-y-2">
+                                <p><strong class="font-semibold">Option 1:</strong> An trainingsfreien Tagen 2-3 mal pro Woche für 20-30 Min. bei moderater Intensität.</p>
+                                <p><strong class="font-semibold">Option 2:</strong> Als Finisher nach dem Krafttraining 10-15 Min. HIIT (z.B. 1 Min. schnell / 1 Min. langsam im Wechsel).</p>
+                                <p><strong class="font-semibold">Option 3:</strong> Eine längere Einheit pro Woche von 30-45 Min.</p>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="accordion-item bg-white border border-stone-200 rounded-lg">
+                        <button class="accordion-header w-full flex justify-between items-center p-4 text-left font-semibold text-stone-800">
+                            <span>Progression & Anpassung</span>
+                             <span class="accordion-icon transition-transform">▼</span>
+                        </button>
+                        <div class="accordion-content max-h-0">
+                            <div class="p-4 pt-0 text-stone-600 space-y-2">
+                                <p>Der Schlüssel zu dauerhaftem Erfolg ist die kontinuierliche Steigerung (Progressive Overload).</p>
+                                <ul class="list-disc list-inside mt-2 space-y-1">
+                                    <li><strong class="font-semibold">Wiederholungen steigern:</strong> Schaffe bei allen Sätzen die obere Wiederholungszahl, bevor du das Gewicht erhöhst.</li>
+                                    <li><strong class="font-semibold">Sätze steigern:</strong> Füge einen weiteren Satz hinzu, wenn du bei den Wiederholungen stagnierst.</li>
+                                    <li><strong class="font-semibold">15kg zu leicht?</strong> Verlangsame die Bewegung (mehr Zeit unter Spannung), erhöhe die Wiederholungen oder verkürze die Pausen.</li>
+                                    <li><strong class="font-semibold">15kg zu schwer?</strong> Reduziere die Wiederholungszahl und konzentriere dich zu 100% auf die saubere Technik.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </section>
+        </main>
+        
+        <footer class="text-center mt-12 md:mt-16 pt-6 border-t border-stone-200">
+            <p class="text-sm text-stone-500">Bleib konsequent und gib deinem Körper Zeit für Regeneration. Viel Erfolg!</p>
+        </footer>
+
+    </div>
+
+    <div id="geminiModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-white p-6 rounded-lg shadow-xl max-w-md w-full max-h-[80vh] flex flex-col">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modalTitle" class="text-xl font-semibold text-stone-800">KI-generierter Inhalt</h3>
+                <button id="closeModalBtn" class="text-stone-500 hover:text-stone-700 text-3xl leading-none">×</button>
+            </div>
+            <div id="modalContent" class="text-stone-700 overflow-y-auto">
+                <p id="loadingIndicator" class="hidden text-center py-4">Lade...</p>
+                <p id="errorIndicator" class="hidden text-red-600"></p>
+                <div id="geminiResponseArea" class="modal-content-display"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const tabA = document.getElementById('tab-a');
+        const tabB = document.getElementById('tab-b');
+        const contentA = document.getElementById('content-a');
+        const contentB = document.getElementById('content-b');
+
+        const geminiModal = document.getElementById('geminiModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const errorIndicator = document.getElementById('errorIndicator');
+        const geminiResponseArea = document.getElementById('geminiResponseArea');
+
+        const geminiNutritionTipBtn = document.getElementById('geminiNutritionTipBtn');
+        const geminiVariationBtns = document.querySelectorAll('.geminiVariationBtn');
+
+        const apiKey = ""; 
+
+        async function fetchFromGemini(prompt) {
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+            
+            loadingIndicator.classList.remove('hidden');
+            errorIndicator.classList.add('hidden');
+            geminiResponseArea.textContent = '';
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error?.message || `API-Fehler: ${response.status}`);
+                }
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    return result.candidates[0].content.parts[0].text;
+                } else {
+                    throw new Error("Ungültige oder leere Antwort von der API.");
+                }
+            } catch (error) {
+                console.error("Fehler beim Abrufen von Gemini:", error);
+                errorIndicator.textContent = `Fehler: ${error.message}`;
+                errorIndicator.classList.remove('hidden');
+                return null;
+            } finally {
+                loadingIndicator.classList.add('hidden');
+            }
+        }
+
+        function openModal(title) {
+            modalTitle.textContent = title;
+            geminiModal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            geminiModal.classList.add('hidden');
+            geminiResponseArea.textContent = '';
+            errorIndicator.classList.add('hidden');
+            loadingIndicator.classList.add('hidden');
+        }
+
+        closeModalBtn.addEventListener('click', closeModal);
+        geminiModal.addEventListener('click', (event) => {
+            if (event.target === geminiModal) {
+                closeModal();
+            }
+        });
+
+
+        if (geminiNutritionTipBtn) {
+            geminiNutritionTipBtn.addEventListener('click', async () => {
+                openModal("✨ Ernährungstipp des Tages");
+                const prompt = "Gib mir einen kurzen und praktischen Ernährungstipp (ca. 2-3 Sätze) für jemanden, der Muskeln aufbauen und fit werden möchte. Formuliere es motivierend und direkt ansprechend.";
+                const tip = await fetchFromGemini(prompt);
+                if (tip) {
+                    geminiResponseArea.textContent = tip;
+                }
+            });
+        }
+
+        geminiVariationBtns.forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const exerciseName = btn.dataset.exerciseName;
+                openModal(`✨ Variation für: ${exerciseName}`);
+                const prompt = `Ich mache die Übung "${exerciseName}". Schlage mir eine Variation dieser Übung vor, die ich mit meinem Körpergewicht, einer 69cm breiten Klimmzugstange, einem Waterrower Rudergerät oder zwei 15kg Kurzhanteln durchführen kann. Die Variation kann die Übung leichter oder schwerer machen. Gib eine kurze Anleitung (1-2 Sätze).`;
+                const variation = await fetchFromGemini(prompt);
+                if (variation) {
+                    geminiResponseArea.textContent = variation;
+                }
+            });
+        });
+
+
+        function setActiveTab(tab) {
+            if (tab === 'a') {
+                tabA.classList.add('active');
+                tabB.classList.remove('active');
+                contentA.classList.remove('hidden');
+                contentB.classList.add('hidden');
+            } else {
+                tabB.classList.add('active');
+                tabA.classList.remove('active');
+                contentB.classList.remove('hidden');
+                contentA.classList.add('hidden');
+            }
+        }
+        
+        tabA.addEventListener('click', () => setActiveTab('a'));
+        tabB.addEventListener('click', () => setActiveTab('b'));
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setActiveTab('a');
+        });
+
+        const accordionItems = document.querySelectorAll('.accordion-item');
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            const content = item.querySelector('.accordion-content');
+            const icon = item.querySelector('.accordion-icon');
+
+            if (header && content && icon) {
+                header.addEventListener('click', () => {
+                    const isOpened = content.style.maxHeight && content.style.maxHeight !== '0px';
+                    
+                    document.querySelectorAll('.accordion-content').forEach(c => {
+                        if (c !== content) {
+                           c.style.maxHeight = '0px';
+                           const otherIcon = c.previousElementSibling.querySelector('.accordion-icon');
+                           if(otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+                        }
+                    });
+
+                    if (!isOpened) {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        icon.style.transform = 'rotate(180deg)';
+                    } else {
+                         content.style.maxHeight = '0px';
+                         icon.style.transform = 'rotate(0deg)';
+                    }
+                });
+            }
+        });
+
+    </script>
+</body>
+</html>
